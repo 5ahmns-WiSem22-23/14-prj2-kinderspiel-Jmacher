@@ -6,10 +6,10 @@ namespace Interface
     [AddComponentMenu("Interface/Button/Button Image")]
     public class ButtonImage : ButtonExtension
     {
-        [SerializeField] private Image targetElement;
+        [SerializeField] Image targetElement;
         [SerializeField]
-        private Color[] states = new Color[]
-        {Color.white, Color.black, Color.black, Color.grey};
+        Color[] states = new Color[]
+        { Color.white, Color.black, Color.black, Color.grey };
 
         public override void Setup() => targetElement.color = states[0];
         public override void PointerEnter() => targetElement.color = states[1];

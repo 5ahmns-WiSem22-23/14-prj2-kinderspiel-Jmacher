@@ -7,8 +7,8 @@ namespace Interface
     [AddComponentMenu("Interface/Button/Button")]
     public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField] private UnityEvent onClick;
-        [SerializeField] private ButtonExtension[] extensions = new ButtonExtension[1];
+        [SerializeField] UnityEvent onClick;
+        [SerializeField] ButtonExtension[] extensions = new ButtonExtension[1];
 
         private bool active = true, pressed, outside;
         public bool Active
