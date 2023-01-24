@@ -4,6 +4,7 @@ using UnityEngine;
 public class Dice : MonoBehaviour
 {
     [Range(0, 5)][SerializeField] int duration = 2;
+    //[SerializeField] FishManager fishManager;
     [SerializeField] Fish[] fish = new Fish[2];
 
     private bool rolling = false;
@@ -27,6 +28,7 @@ public class Dice : MonoBehaviour
         sprite.color = new Color(1, 1, 1);
 
         int id = Random.Range(0, fish.Length);
+        //fishManager.active = fish[id].transform;
         for (int i = 0; i < fish.Length; i++) fish[i].Active = i == id;
 
         rolling = false;

@@ -587,6 +587,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238153, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238153, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8830066
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238153, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3199431715281238158, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_Name
       value: Yellow
