@@ -4,8 +4,10 @@ using UnityEngine;
 public class Dice : MonoBehaviour
 {
     [Range(0, 5)][SerializeField] int duration = 2;
-    //[SerializeField] FishManager fishManager;
     [SerializeField] Fish[] fish = new Fish[2];
+    [SerializeField] Boat boat;
+    [SerializeField] Color red = Color.red;
+    [SerializeField] Color green = Color.green;
 
     private bool rolling = false;
     private SpriteRenderer sprite;
@@ -21,15 +23,24 @@ public class Dice : MonoBehaviour
     {
         rolling = true;
 
-        sprite.color = new Color(.5f, .5f, .5f);
+        foreach (Fish f in fish) f.Active = false;
+
+        sprite.color = new Color(1, 1, 1, .5f);
 
         yield return new WaitForSeconds(duration);
 
-        sprite.color = new Color(1, 1, 1);
-
-        int id = Random.Range(0, fish.Length);
-        //fishManager.active = fish[id].transform;
-        for (int i = 0; i < fish.Length; i++) fish[i].Active = i == id;
+        int id = Random.Range(0, 7);
+        if (id < 4)
+        {
+            for (int i = 0; i < fish.Length; i++) fish[i].Active = i == id;
+            sprite.color = fish[id].GetComponent<SpriteRenderer>().color;
+        }
+        else
+        {
+            if (id == 4 || id == 5) sprite.color = red;
+            else sprite.color = green;
+            boat.StartCoroutine(boat.Move());
+        }
 
         rolling = false;
     }

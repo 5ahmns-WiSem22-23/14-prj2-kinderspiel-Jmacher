@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Grid
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 351403345
+    locked: 0
+  - name: Grid
+    uniqueID: 1354844479
     locked: 0
   - name: Default
     uniqueID: 0
