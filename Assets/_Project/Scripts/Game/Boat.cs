@@ -1,24 +1,16 @@
-using System.Collections;
 using UnityEngine;
 
 public class Boat : MonoBehaviour
 {
-    [SerializeField] float duration = .8f;
+    //[SerializeField] float duration = .8f;
 
-    public IEnumerator Move()
+    private GridManager gm;
+
+    private void Awake() => gm = GameObject.FindGameObjectWithTag("Grid").GetComponent<GridManager>();
+
+    public void Move()
     {
-        WaitForEndOfFrame wait = new WaitForEndOfFrame();
-        Vector3 start = transform.position,
-            end = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
-        float time = 0f, fac;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            fac = AnimationCurve.EaseInOut(0, 0, 1, 1).Evaluate(Mathf.InverseLerp(0, duration, time));
-            transform.position = Vector3.Lerp(start, end, fac);
-
-            yield return wait;
-        }
+        Tile[] tiles = gm.GetValidTiles(transform.position);
+        transform.position = tiles[Random.Range(0, tiles.Length)].transform.position;
     }
 }

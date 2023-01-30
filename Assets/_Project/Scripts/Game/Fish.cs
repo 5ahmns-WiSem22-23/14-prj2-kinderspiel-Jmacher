@@ -1,9 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class Fish : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer fill, border;
+    [SerializeField] SpriteRenderer fill, border, shadow;
+    [SerializeField] float duration = .2f;
 
     private GridManager grid;
     private Tile[] validTiles;
@@ -13,7 +13,11 @@ public class Fish : MonoBehaviour
     public bool Active
     {
         get => active;
-        set => active = border.enabled = value;
+        set
+        {
+            active = value;
+            LeanTween.alpha(border.gameObject, value ? 1f : 0f, duration).setEase(LeanTweenType.easeOutQuad);
+        }
     }
 
     private void Start()
@@ -28,12 +32,14 @@ public class Fish : MonoBehaviour
         if (!active) return;
 
         moving = true;
-        Tile start = grid.GetStartTile(transform.position);
+        Tile start = grid.GetClosestTile(transform.position);
         if (start != null) start.filled = false;
 
-        SetRenderer("Hover", .5f);
+        LeanTween.alpha(shadow.gameObject, .6f, duration).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.moveLocal(shadow.gameObject, new Vector3(-.04f, -.04f), duration).setEase(LeanTweenType.easeOutQuad);
 
         validTiles = grid.GetValidTiles(transform.position);
+
         grid.StartCoroutine(grid.Highlight(transform));
     }
     private void OnMouseDrag()
@@ -41,7 +47,7 @@ public class Fish : MonoBehaviour
         if (!active) return;
 
         Vector3 mousPos = cam.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = Vector3.Lerp(transform.position, new Vector3(mousPos.x, mousPos.y), .1f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(mousPos.x, mousPos.y), .02f);
     }
     private void OnMouseUp()
     {
@@ -57,35 +63,13 @@ public class Fish : MonoBehaviour
                 shortestDistance = dist;
             }
         }
+        LeanTween.move(gameObject, target.transform.position, duration).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.alpha(shadow.gameObject, .3f, duration).setEase(LeanTweenType.easeOutQuad);
+        LeanTween.moveLocal(shadow.gameObject, new Vector3(.02f, .02f), duration).setEase(LeanTweenType.easeOutQuad);
 
-        SetRenderer("Default", 1);
-        StartCoroutine(Transition(target.transform.position));
         moving = false;
         target.filled = true;
         grid.hovering = false;
         Active = false;
-    }
-    private void SetRenderer(string sortingLayer, float alpha)
-    {
-        fill.sortingLayerName = sortingLayer;
-        fill.color = new Color(fill.color.r, fill.color.g, fill.color.b, alpha);
-        border.color = new Color(border.color.r, border.color.g, border.color.b, alpha);
-    }
-    private IEnumerator Transition(Vector3 target)
-    {
-        WaitForEndOfFrame wait = new WaitForEndOfFrame();
-        float time = 0f, fac, duration = .2f;
-        Vector3 start = transform.position;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            fac = AnimationCurve.EaseInOut(0, 0, 1, 1).Evaluate(Mathf.InverseLerp(0, duration, time));
-
-            transform.position = Vector3.Lerp(start, target, fac);
-            yield return wait;
-        }
-
-        transform.position = target;
     }
 }

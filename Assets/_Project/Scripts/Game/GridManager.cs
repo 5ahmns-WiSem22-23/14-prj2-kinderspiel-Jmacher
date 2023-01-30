@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 public class GridManager : MonoBehaviour
 {
     [SerializeField] GameObject tilePrefab;
     [SerializeField] GameObject obstaclePrefab;
     [Range(0, 10)][SerializeField] int obstacleCount;
     [SerializeField] Vector2Int gridSize;
+    [SerializeField] float duration = .1f;
+    [SerializeField] Vector2 transparency = new Vector2(.3f, .6f);
     [SerializeField] bool debugPoints;
 
     [HideInInspector] public bool hovering;
     private Tile[,] grid;
+    private List<GameObject> obstacles = new List<GameObject>();
+    public Tile[,] Grid => grid;
 
-    private void Awake() => Generate();
-    private void Generate()
+    private void Awake()
     {
         grid = new Tile[gridSize.x, gridSize.y];
         Vector2 offset = new Vector2(gridSize.x / 2f - .5f, gridSize.y / 2f - .5f);
@@ -33,18 +35,21 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        for (int y = 0; y < gridSize.y; y++) grid[0, y].filled = true;
+        for (int y = 0; y < gridSize.y; y++) grid[6, y].filled = true;
 
         //Obstacles
         int count = 0;
         while (count < obstacleCount)
         {
-            Tile target = grid[Random.Range(0, gridSize.x - 1), Random.Range(0, gridSize.y - 1)];
-            if (target.filled) continue;
+            Vector2Int index = new Vector2Int(Random.Range(1, gridSize.x - 2), Random.Range(0, gridSize.y - 1));
+            if (grid[index.x, index.y].filled) continue;
+            List<Tile> filled = Enumerable.Range(0, gridSize.y).Select(x => grid[index.x, x]).Where(t => t.filled).ToList();
+            if (filled.Count > 2) return;
 
-            Transform obstacle = Instantiate(obstaclePrefab, target.transform.position, Quaternion.identity).transform;
+            Transform obstacle = Instantiate(obstaclePrefab, grid[index.x, index.y].transform.position, Quaternion.identity).transform;
             obstacle.SetParent(transform);
-            target.filled = true;
+            obstacles.Add(obstacle.gameObject);
+            grid[index.x, index.y].filled = true;
             count++;
         }
     }
@@ -57,22 +62,33 @@ public class GridManager : MonoBehaviour
         Tile[] tiles = GetValidTiles(fish.position);
         SpriteRenderer[] renderers = new SpriteRenderer[tiles.Length];
         for (int i = 0; i < tiles.Length; i++) renderers[i] = tiles[i].img;
+        bool[] previous = new bool[tiles.Length];
+
+        foreach (Tile tile in tiles) LeanTween.alpha(tile.gameObject, transparency.x, duration);
 
         while (hovering)
         {
-            foreach (var img in renderers)
+            for (int i = 0; i < tiles.Length; i++)
             {
-                if (img.bounds.Contains(fish.position)) img.color =
-                        new Color(img.color.r, img.color.g, img.color.b, .6f);
-                else img.color =
-                        new Color(img.color.r, img.color.g, img.color.b, .3f);
+                if (renderers[i].bounds.Contains(fish.position) != previous[i])
+                {
+                    if (previous[i])
+                    {
+                        previous[i] = false;
+                        LeanTween.alpha(renderers[i].gameObject, transparency.x, duration);
+                    }
+                    else
+                    {
+                        previous[i] = true;
+                        LeanTween.alpha(renderers[i].gameObject, transparency.y, duration);
+                    }
+                }
             }
 
             yield return wait;
         }
 
-        foreach (var img in renderers) img.color =
-                new Color(img.color.r, img.color.g, img.color.b, 0f);
+        foreach (Tile tile in tiles) LeanTween.alpha(tile.gameObject, 0, duration);
     }
     public Tile[] GetValidTiles(Vector3 pos)
     {
@@ -100,8 +116,7 @@ public class GridManager : MonoBehaviour
 
         return tiles.Where(t => !t.filled).ToArray();
     }
-
-    public Tile GetStartTile(Vector3 pos)
+    public Tile GetClosestTile(Vector3 pos)
     {
         for (int x = 0; x < gridSize.x; x++)
         {
@@ -121,7 +136,7 @@ public class GridManager : MonoBehaviour
         if (!debugPoints) return;
         if (grid == null) return;
 
-        foreach (var tile in grid)
+        foreach (Tile tile in grid)
         {
             if (tile.filled) Gizmos.color = Color.red;
             else Gizmos.color = Color.white;

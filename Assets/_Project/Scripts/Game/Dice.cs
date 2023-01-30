@@ -37,9 +37,8 @@ public class Dice : MonoBehaviour
         }
         else
         {
-            if (id == 4 || id == 5) sprite.color = red;
-            else sprite.color = green;
-            boat.StartCoroutine(boat.Move());
+            sprite.color = id == 4 || id == 5 ? red : green;
+            boat.Move();
         }
 
         rolling = false;

@@ -45,12 +45,15 @@ TagManager:
   - name: Grid
     uniqueID: 1354844479
     locked: 0
+  - name: Shadow Regular
+    uniqueID: 508534987
+    locked: 0
+  - name: Selection
+    uniqueID: 1366598767
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Hover
     uniqueID: 3188631715
-    locked: 0
-  - name: Selection
-    uniqueID: 1366598767
     locked: 0
