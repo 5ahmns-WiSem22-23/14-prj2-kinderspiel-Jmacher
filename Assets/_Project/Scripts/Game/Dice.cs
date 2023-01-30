@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    [Range(0, 5)][SerializeField] int duration = 2;
-    [SerializeField] Fish[] fish = new Fish[2];
+    [Range(0, 5)][SerializeField] float duration = 2;
+    public List<Fish> fish = new List<Fish>();
     [SerializeField] Boat boat;
     [SerializeField] Color red = Color.red;
     [SerializeField] Color green = Color.green;
@@ -29,10 +30,10 @@ public class Dice : MonoBehaviour
 
         yield return new WaitForSeconds(duration);
 
-        int id = Random.Range(0, 7);
-        if (id < 4)
+        int id = Random.Range(0, fish.Count + 1);
+        if (id < fish.Count)
         {
-            for (int i = 0; i < fish.Length; i++) fish[i].Active = i == id;
+            for (int i = 0; i < fish.Count; i++) fish[i].Active = i == id;
             sprite.color = fish[id].GetComponent<SpriteRenderer>().color;
         }
         else

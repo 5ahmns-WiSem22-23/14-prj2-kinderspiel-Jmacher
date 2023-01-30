@@ -198,7 +198,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab3fe13b920adb7449576e8cb0528d17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69628124eb63f2f4e86e68d7222db2bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 0.6
   fish:
   - {fileID: 157374718}
   - {fileID: 1778364489}
@@ -261,7 +261,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.9, y: 0.9}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -403,6 +403,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: dice
+      value: 
+      objectReference: {fileID: 184673502}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: smoothing
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3199431715281238158, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_Name
       value: Pink
@@ -491,6 +499,14 @@ PrefabInstance:
     - target: {fileID: 3199431715281238153, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_SortingLayer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: dice
+      value: 
+      objectReference: {fileID: 184673502}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: smoothing
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3199431715281238158, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_Name
@@ -598,6 +614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f4d3c040c87c84e85758f90e4c8c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 0.8
+  dice: {fileID: 184673502}
 --- !u!1 &1584513769
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +848,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: dice
+      value: 
+      objectReference: {fileID: 184673502}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: smoothing
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3199431715281238158, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_Name
       value: Yellow
@@ -899,6 +925,14 @@ PrefabInstance:
     - target: {fileID: 3199431715281238153, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_Color.g
       value: 0.6490196
+      objectReference: {fileID: 0}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: dice
+      value: 
+      objectReference: {fileID: 184673502}
+    - target: {fileID: 3199431715281238155, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
+      propertyPath: smoothing
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3199431715281238158, guid: ff451cf35b2f8734796bc0fed5bbbea2, type: 3}
       propertyPath: m_Name

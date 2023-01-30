@@ -3,7 +3,9 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     [SerializeField] SpriteRenderer fill, border, shadow;
+    [SerializeField] Dice dice;
     [SerializeField] float duration = .2f;
+    [SerializeField] float smoothing = .1f;
 
     private GridManager grid;
     private Tile[] validTiles;
@@ -47,7 +49,7 @@ public class Fish : MonoBehaviour
         if (!active) return;
 
         Vector3 mousPos = cam.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = Vector3.Lerp(transform.position, new Vector3(mousPos.x, mousPos.y), .02f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(mousPos.x, mousPos.y), smoothing);
     }
     private void OnMouseUp()
     {
@@ -71,5 +73,13 @@ public class Fish : MonoBehaviour
         target.filled = true;
         grid.hovering = false;
         Active = false;
+
+        if (target.transform.position.x > 5)
+        {
+            dice.fish.Remove(this);
+            target.filled = false;
+            LeanTween.moveX(gameObject, transform.position.x + 8, .5f).setEaseInCubic();
+            LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setDestroyOnComplete(true);
+        }
     }
 }
