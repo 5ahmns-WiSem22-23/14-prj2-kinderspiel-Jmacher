@@ -3,6 +3,7 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     [SerializeField] SpriteRenderer fill, border, shadow;
+    [SerializeField] FishTracker tracker;
     [SerializeField] Dice dice;
     [SerializeField] float duration = .2f;
     [SerializeField] float smoothing = .1f;
@@ -79,7 +80,11 @@ public class Fish : MonoBehaviour
             dice.fish.Remove(this);
             target.filled = false;
             LeanTween.moveX(gameObject, transform.position.x + 8, .5f).setEaseInCubic();
-            LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setDestroyOnComplete(true);
+            LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setOnComplete(() =>
+            {
+                tracker.count++;
+                Destroy(gameObject);
+            });
         }
     }
 }

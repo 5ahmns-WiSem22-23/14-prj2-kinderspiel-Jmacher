@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Boat : MonoBehaviour
 {
     [SerializeField] float duration = .8f;
     [SerializeField] Dice dice;
+    [SerializeField] GameObject ending;
 
     private GridManager gm;
 
@@ -37,14 +37,14 @@ public class Boat : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) Reload();
-
         if (transform.position.x > 5)
         {
             LeanTween.moveX(gameObject, transform.position.x + 100, .5f).setEaseInCubic();
-            LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setOnComplete(Reload);
+            LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setOnComplete(() =>
+            {
+                ending.SetActive(true);
+                ending.GetComponent<Ending>().title.text = "Das Boot ist gefahren!";
+            });
         }
     }
-
-    private void Reload() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 }

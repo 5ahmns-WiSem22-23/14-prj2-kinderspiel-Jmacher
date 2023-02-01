@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 3199431715281238155}
   m_Layer: 0
   m_Name: Fish
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,4 +291,6 @@ MonoBehaviour:
   fill: {fileID: 3199431715281238153}
   border: {fileID: 1617346268041026525}
   shadow: {fileID: 145132083653096678}
+  dice: {fileID: 0}
   duration: 0.2
+  smoothing: 0.1
