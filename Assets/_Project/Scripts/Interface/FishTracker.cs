@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class FishTracker : MonoBehaviour
 {
     [SerializeField] GameObject ending;
-    [HideInInspector] public int count;
+    [SerializeField] TextMeshProUGUI txt;
+    [HideInInspector] int count;
 
     private void Update()
     {
@@ -12,5 +14,11 @@ public class FishTracker : MonoBehaviour
             ending.SetActive(true);
             ending.GetComponent<Ending>().title.text = "Alle Fische sind entkommen!";
         }
+    }
+
+    public void Count()
+    {
+        count++;
+        txt.text = count.ToString();
     }
 }

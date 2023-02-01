@@ -82,7 +82,7 @@ public class Fish : MonoBehaviour
             LeanTween.moveX(gameObject, transform.position.x + 8, .5f).setEaseInCubic();
             LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setOnComplete(() =>
             {
-                tracker.count++;
+                tracker.Count();
                 Destroy(gameObject);
             });
         }
