@@ -39,11 +39,12 @@ public class Boat : MonoBehaviour
     {
         if (transform.position.x > 5)
         {
-            LeanTween.moveX(gameObject, transform.position.x + 100, .5f).setEaseInCubic();
-            LeanTween.alpha(gameObject, 0, .5f).setEaseInCubic().setOnComplete(() =>
+            LeanTween.moveX(gameObject, transform.position.x + 100, .5f)
+                .setEaseInCubic().setOnComplete(() =>
             {
                 ending.SetActive(true);
                 ending.GetComponent<Ending>().title.text = "Das Boot ist gefahren!";
+                Destroy(gameObject);
             });
         }
     }
